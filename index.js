@@ -3,35 +3,35 @@ const fs = require('fs');
 const file = (name, data) => [name, 'file', data];
 const dir = (name, nodes) => [name, 'dir', nodes];
 
-const printNode = (node, level) => {
-    const name = node[0];
-    let tabs = '';
+const createTree = (root, context = '.') => {
+    const [name, type, content] = root;
 
-    for (let i = 0; i < level; i++) {
-        tabs += '\t';
-    }
-
-    console.log(`${tabs}- ${name}`);
-};
-
-const printTree = (node, level = 0) => {
-    const [name, type, content] = node;
-    
     if (type === 'file') {
-        printNode(node, level);
+        fs.appendFileSync(context + '/' + name, content);
     } else {
-        printNode(node, level);
+        fs.mkdirSync(context + '/' + name);
 
-        for (let i = 0; i < content.length; i++) {
-            printTree(content[i], level + 1);
+        if (content) {
+            for (let i = 0; i < content.length; i++) {
+                createTree(node, context + '/' + name);
+            }
         }
     }
 };
 
 const hierarchy = dir('sass', [
-    file('index.scss', '...'),
-    dir('abstracts', [ file('_variables.scss', '...'), file('_mixin.scss', '...') ]),
-    dir('base', [ file('_reset.scss', '...') ])
+    file('index.scss', '/* Styles bundle */'),
+    dir('abstracts', [
+        file('_variables.scss', '/* Variables */'),
+        file('_mixin.scss', '/* General purpose mixins */')
+    ]),
+    dir('base', [
+        file('_reset.scss', '/* Reset styles */'),
+        file('_fonts.scss', '/* Bulletproof fonts */'),
+        file('_tags.scss', '/* Tags styles */')
+    ]),
+    dir('components'),
+    dir('layout')
 ]);
 
-printTree(hierarchy);
+createTree(hierarchy);
