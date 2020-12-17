@@ -12,9 +12,9 @@ const createTree = (root, context = '.') => {
         fs.mkdirSync(context + '/' + name);
 
         if (content) {
-            for (let i = 0; i < content.length; i++) {
+            content.forEach((node) => {
                 createTree(node, context + '/' + name);
-            }
+            })
         }
     }
 };
