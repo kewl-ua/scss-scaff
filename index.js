@@ -14,9 +14,36 @@ const createTree = (root, context = '.') => {
         if (content) {
             content.forEach((node) => {
                 createTree(node, context + '/' + name);
-            })
+            });
         }
     }
+};
+
+const printTree = (root) => {
+    const formatName = (name, level) => {
+        let indent = '';
+
+        for (let i = 0; i < level; i++) {
+            indent += '    ';
+        }
+
+        return `${indent}--${name}`;
+    };
+
+    const iter = (node, level = 0) => {
+        const [name, type, content] = node;
+        const fName = formatName(name, level);
+
+        console.log(fName);
+
+        if (type === 'dir') {
+            if (content) {
+                content.forEach((c) => { iter(c, level + 1); });
+            }
+        }
+    }
+
+    iter(root);
 };
 
 const hierarchy = dir('sass', [
@@ -35,3 +62,4 @@ const hierarchy = dir('sass', [
 ]);
 
 createTree(hierarchy);
+printTree(hierarchy);
