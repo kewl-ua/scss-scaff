@@ -31,7 +31,8 @@ const type = (node) => {
 const isFile = node => type(node) === 'file';
 const isDir = node => type(node) === 'dir';
 
-const nodeStr = (node, level) => {
+// FS debug
+const FSNodeStr = (node, level) => {
     const DEPTH_SYMBOL = '  ';
     const PREFIX_SYMBOL = '--';
 
@@ -53,9 +54,8 @@ const nodeStr = (node, level) => {
     return result;
 };
 
-// FS debug
 const printFSNode = (node, level = 0) => {
-    console.log(nodeStr(node, level));
+    console.log(FSNodeStr(node, level));
 };
 
 const printFS = (fs) => {
