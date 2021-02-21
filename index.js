@@ -1,5 +1,4 @@
 const fs = require('fs');
-const readline = require('readline');
 const scssExamples = require('./scss-examples');
 
 const node = (name, child) => [name, child];
