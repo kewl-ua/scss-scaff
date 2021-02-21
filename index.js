@@ -1,4 +1,5 @@
 const fs = require('fs');
+const readline = require('readline');
 const scssExamples = require('./scss-examples');
 
 const node = (name, child) => [name, child];
@@ -76,6 +77,11 @@ const printFS = (fs) => {
 
 // FS
 const makeFSDir = (path) => {
+    if (fs.existsSync(path)) {
+        console.log('Cannot rewrite existing SASS structure.');
+        process.exit(1);
+    }
+
     try {
         fs.mkdirSync(path);
     } catch (e) {
@@ -135,5 +141,5 @@ const fsTree = dir('scss', [
     ])
 ]);
 
-printFS(fsTree);
 makeFS(fsTree);
+printFS(fsTree);
