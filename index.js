@@ -77,14 +77,13 @@ const printFS = (fs) => {
 // FS
 const makeFSDir = (path) => {
     if (fs.existsSync(path)) {
-        console.log('Cannot rewrite existing SASS structure.');
-        process.exit(1);
+        throw new Error('Cannot overwrite existing SASS structutre.');
     }
 
     try {
         fs.mkdirSync(path);
     } catch (e) {
-        console.error(`Failed to create a directory ${path}: `, e);
+        throw new Error('Failed to create a directory ' + path);
     }
 };
 
@@ -92,7 +91,7 @@ const makeFSFile = (path, content) => {
     try {
         fs.writeFileSync(path, content);
     } catch (e) {
-        console.error(`Failed to create a file ${path}: `, e);
+        throw new Error('Failed to create a file ' + path);
     }
 };
 
@@ -140,5 +139,10 @@ const fsTree = dir('scss', [
     ])
 ]);
 
-makeFS(fsTree);
-printFS(fsTree);
+try {
+    makeFS(fsTree);
+    printFS(fsTree);
+} catch (e) {
+    console.error(e.message);
+    process.exit(1);
+}
