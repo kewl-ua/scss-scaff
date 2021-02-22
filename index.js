@@ -118,6 +118,7 @@ const makeFS = (node, context = '') => {
     }
 };
 
+// SASS FS structre
 const fsTree = dir('scss', [
     file('index.scss', scssExamples.index),
     dir('abstracts', [
@@ -138,6 +139,7 @@ const fsTree = dir('scss', [
     ])
 ]);
 
+// Driver
 try {
     makeFS(fsTree);
     printFS(fsTree);
