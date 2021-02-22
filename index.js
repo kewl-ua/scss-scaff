@@ -28,8 +28,8 @@ const type = (node) => {
     return null;
 };
 
-const isFile = node => type(node) === 'file';
-const isDir = node => type(node) === 'dir';
+const isFile = node => type(node) === NODE_TYPES.file;
+const isDir = node => type(node) === NODE_TYPES.DIR;
 
 // FS debug
 const FSNodeStr = (node, level) => {
@@ -64,7 +64,7 @@ const printFS = (fs) => {
 
         const child = getChild(node);
 
-        if (isDir(child)) {
+        if (isDir(node)) {
             for (var c of child) {
                 iter(c, level + 1);
             }
@@ -106,11 +106,10 @@ const makeFS = (node, context = '') => {
         case NODE_TYPES.DIR:
             makeFSDir(path);
 
-            if (isDir(child)) {
-                for (let c of child) {
-                    makeFS(c,  path);
-                }
+            for (let c of child) {
+                makeFS(c,  path);
             }
+
             break;
         case NODE_TYPES.FILE:
         default:
@@ -135,7 +134,7 @@ const fsTree = dir('scss', [
     ]),
     dir('layout', [
         file('_header.scss', scssExamples.layout._header),
-        file('_footer', scssExamples.layout._footer)
+        file('_footer.scss', scssExamples.layout._footer)
     ])
 ]);
 

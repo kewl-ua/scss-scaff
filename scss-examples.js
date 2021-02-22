@@ -90,7 +90,8 @@ html {
 `;
 
 // scss/components
-const _button = `
+const _button =
+`
 /* Reusable button */
 /* Example */
 @mixin button($color: $white-1, $bg-color: $blue-1) {
